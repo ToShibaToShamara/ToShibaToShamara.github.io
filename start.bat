@@ -1,3 +1,3 @@
 @ECHO OFF
-java -Xms1024M -Xmx2048M -jar minecraft_server.jar --nogui
+java -Xms1024M -Xmx2048M -jar server.jar --nogui
 pause
