@@ -1,18 +1,19 @@
 <html>
 <head>
-<title>Run Exe or Bat files from HTA by Hackoo</title>
+<title>Run Minecraft Server</title>
 <HTA:APPLICATION
-  APPLICATIONNAME="Run Exe or Bat files from HTA by Hackoo"
+  APPLICATIONNAME="Run Minecraft server"
   ID="MyHTMLapplication"
   VERSION="1.0"/>
 </head>
 <script>
 function RunExe(){
     var shell = new ActiveXObject("WScript.Shell");
-    var path = '"start.bat"';
+    var path = '"start.sh"';
     shell.run(path,1,false);
 }
 </script>
 <input style="width: 170px; height:23px; color: white; background-color: #203040; 
-font-family:Book Antiqua;" type="button" Value="Temperature Sensor" onClick="RunExe();"
+font-family:Book Antiqua;" type="button" Value="Run Server" onClick="RunExe();"
+<h1>I hope this shit works</h1>
 </html>
