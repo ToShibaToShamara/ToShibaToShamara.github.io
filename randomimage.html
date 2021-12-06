@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random image generator</title>
+    <style>
+        img.background {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        -webkit-filter: blur(10px);
+        filter: blur(10px);
+        }
+      </style>
+</head>
+<body style="background-image: url(https://picsum.photos/1024/1024); background-repeat: no-repeat; background-size: cover;">
+    <center><h1 style='color: rgb(53, 53, 53); background-color: #b1c3ff; display: table;'>Random image generator</h1>
+    <img class="background" src="https://picsum.photos/1024/1024">
+    <center><img src='https://picsum.photos/1024/1024' width="30%" style="border: 10px solid #3232a3;">
+    <center><button onclick="location.reload()" style="background-color: #555555; color: #d6d6d6; font-size: 140%; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Click to change the image</button>  
+    <div style="position: absolute; bottom: 5px; background-color: darkgrey; border-radius: 50%; width: 205px; height: 20px;">
+        Bogdan napravijo © 2021
+        </div>
+    </div>
+</body>
+</html>
