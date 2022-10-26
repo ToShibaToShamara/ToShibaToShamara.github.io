@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gembl</title>
+</head>
+<style>
+    p {
+    display: inline-block;
+    }
+    body {
+        background-color: #161b22;
+    }
+    #new {
+        background-color: #00000088;
+        border-radius: 25px;
+        padding: 20px;
+        position: relative;
+        text-align: center;
+    }
+    .vertical-center {
+        margin: 0;
+        position: relative;
+        top: 50%;
+        -ms-transform: translateY(50%);
+        transform: translateY(50%);
+    }
+    .vertical-center-button {
+        margin: 0;
+        position: relative;
+        top: 50%;
+        -ms-transform: translateY(1000%);
+        transform: translateY(350%);
+    }
+    .button-regenerate {
+        width: 20vh;
+        height: 7vh;
+        background-color: #0d1014;
+        color: rgb(207, 204, 204);
+        border-color: rgba(0, 0, 0, 0);
+        border-radius: 10px;
+        padding: 5px;
+        font-size: larger;
+        
+    }
+    .button-regenerate:hover {
+        background-color: #090b0e;
+    }
+    .button-regenerate:active {
+        background-color: #07080a;
+    }
+</style>
+<body>
+    <!--🟣 crveni i crni kruzici 🟣-->
+    
+    <div id="new" class="vertical-center">
+    </div>
+    
+    <!--🟣 dugme 🟣-->
+    
+    <div class="vertical-center-button">
+        <center><button class="button-regenerate" onclick="generisanje()">Генериши</button></center>
+    </div>
+    
+    <!--🟣 random generise broj izmedju 1 i 0 i stvara crveni ili crnu kruzic u div sa id new 🟣-->
+    
+    <script>
+        generisanje()
+        function generisanje() {
+            document.getElementById("new").innerHTML = "";
+            let x = Math.floor(Math.random() * 2);
+            for(let i=0;i<500;i++){
+                x = Math.floor(Math.random() * 2);
+                if(x==0)
+                {
+                    var tag = document.createElement("p");
+                    var text = document.createTextNode("⚫");
+                    tag.appendChild(text);
+                    var element = document.getElementById("new");
+                    element.appendChild(tag);
+                }
+                if(x==1)
+                {
+                    var tag = document.createElement("p");
+                    var text = document.createTextNode("🔴");
+                    tag.appendChild(text);
+                    var element = document.getElementById("new");
+                    element.appendChild(tag);
+                }
+            }
+            }
+    </script>
+</body>
+</html>
