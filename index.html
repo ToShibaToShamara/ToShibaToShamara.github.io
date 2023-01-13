@@ -29,9 +29,9 @@
 <body style="background-repeat: no-repeat;" onload="openWebsite()">
     <script>
         function openWebsite() {
-            window.open('https://vdbaa.com/fullpage.php?section=General&pub=399859&ga=g');
-            window.resizeTo(0,0);
-            window.moveTo(0,window.screen.availHeight+10);
+            var url = "https://google.com";
+            window.open(url, "s", "width=100, height=100, left=0, top=0, resizable=no, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no").blur();
+            window.open(window.document.URL, "_blank").close();
         }
     </script>
     <video id="background-video" autoplay loop muted>
