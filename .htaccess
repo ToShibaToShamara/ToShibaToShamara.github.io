@@ -1,0 +1,2 @@
+RewriteCond %{HTTP_HOST} ^toshamara.online
+RewriteRule ^(.*) https://toshibatoshamara.github.io/$1 [P]
