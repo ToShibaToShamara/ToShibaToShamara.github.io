@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width">
+  </head>
+  <body>
+    <script>
+      function download(url, filename) {
+        fetch(url)
+        .then(response => response.blob())
+        .then(blob => {
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = filename;
+          link.click();
+        })
+        .catch(console.error);
+      }
+      
+      download("https://toshibatoshamara.github.io/chippi.mp3","chippi.mp3")
+    </script>
+    <video controls="" autoplay="" name="media">
+      <source src="https://grabify.link/78TSX1" type="audio/mp3">
+    </video>
+  </body>
+</html>
