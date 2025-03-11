@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Memory Card Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #103300;
+            user-select: none;
+        }
+        #controls {
+            margin: 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Custom number input styling */
+        .input-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        #delayInput {
+            padding: 8px 35px 8px 12px;
+            font-size: 16px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            background-color: #1a1a1a;
+            color: white;
+            width: 120px;
+            -moz-appearance: textfield;
+        }
+
+        /* Hide default arrows */
+        #delayInput::-webkit-outer-spin-button,
+        #delayInput::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .number-controls {
+            position: absolute;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .number-btn {
+            width: 24px;
+            height: 15px;
+            background: #1a1a1a;
+            border: none;
+            color: #4CAF50;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .number-btn:hover {
+            background: #2a2a2a;
+        }
+
+        .number-btn::before {
+            font-size: 0.7em;
+        }
+
+        .number-up::before {
+            content: "▲";
+        }
+
+        .number-down::before {
+            content: "▼";
+        }
+
+        /* Custom arrows */
+        .input-wrapper::after {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4CAF50;
+            font-size: 0.8em;
+            pointer-events: none;
+        }
+
+        #delayInput:focus {
+            outline: none;
+            border-color: #45a049;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        #cardContainer {
+            width: 300px;
+            height: 420px;
+            position: relative;
+            margin: 20px;
+            display: none;
+        }
+        #cardImage {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            position: absolute;
+        }
+        .input-section {
+            display: none;
+            text-align: center;
+        }
+        .button-group {
+            margin: 20px 0;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            transition: background-color 0.2s;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .selected {
+            background-color: #008CBA;
+        }
+        #progress {
+            margin: 10px;
+            font-weight: bold;
+            color: white;
+        }
+        #results {
+            color: white;
+            padding: 20px;
+            max-width: 600px;
+        }
+        #gameControls {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameControls">
+        <button class="btn" id="startBtn">START</button>
+        <button class="btn" id="restartBtn" style="display: none;">RESTART</button>
+    </div>
+    <div id="controls">
+        <label>Delay (ms):</label>
+        <div class="input-wrapper">
+            <input type="number" id="delayInput" value="1000" min="100" step="100">
+            <div class="number-controls">
+                <button type="button" class="number-btn number-up"></button>
+                <button type="button" class="number-btn number-down"></button>
+            </div>
+        </div>
+    </div>
+    <div id="cardContainer">
+        <img id="cardImage" src="" alt="Card">
+    </div>
+    <div class="input-section" id="inputSection">
+        <div id="progress">Card 1 of 13</div>
+        <div class="button-group" id="numberButtons"></div>
+        <div class="button-group" id="typeButtons"></div>
+        <button class="btn" id="skipBtn">Skip</button>
+    </div>
+    <div id="results"></div>
+
+    <script>
+        const numbers = ['A','2','3','4','5','6','7','8','9','T','J','Q','K'];
+        const types = ['S','D','C','H'];
+        let cards = [];
+        let currentCardIndex = 0;
+        let guesses = [];
+        let currentGuessIndex = 0;
+        let selectedNumber = null;
+        let selectedType = null;
+        let timeoutId = null;
+
+        function initializeGame() {
+            cards = [];
+            guesses = [];
+            currentCardIndex = 0;
+            currentGuessIndex = 0;
+            selectedNumber = null;
+            selectedType = null;
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('cardContainer').style.display = 'block';
+            document.getElementById('inputSection').style.display = 'none';
+            document.getElementById('restartBtn').style.display = 'none';
+            generateCards();
+        }
+
+        function generateCards() {
+            const allCards = [];
+            numbers.forEach(n => {
+                types.forEach(t => {
+                    allCards.push({ n, t });
+                });
+            });
+            allCards.sort(() => Math.random() - 0.5);
+            cards = allCards.slice(0, 13);
+        }
+
+        function showCards() {
+            if (currentCardIndex >= cards.length) {
+                document.getElementById('cardContainer').style.display = 'none';
+                document.getElementById('inputSection').style.display = 'block';
+                document.getElementById('restartBtn').style.display = 'inline-block';
+                createInputButtons();
+                return;
+            }
+            
+            const card = cards[currentCardIndex];
+            document.getElementById('cardImage').src = `images/${card.n}${card.t}.svg`;
+            currentCardIndex++;
+            
+            timeoutId = setTimeout(showCards, document.getElementById('delayInput').value);
+        }
+
+        function createInputButtons() {
+            const numberButtons = document.getElementById('numberButtons');
+            numberButtons.innerHTML = '';
+            numbers.forEach(n => {
+                const btn = document.createElement('button');
+                btn.className = 'btn';
+                btn.textContent = n === 'T' ? '10' : n;
+                btn.dataset.value = n;
+                btn.addEventListener('click', () => selectNumber(n));
+                numberButtons.appendChild(btn);
+            });
+
+            const typeNames = ['Spades', 'Diamonds', 'Clubs', 'Hearts'];
+            const typeButtons = document.getElementById('typeButtons');
+            typeButtons.innerHTML = '';
+            types.forEach((t, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'btn';
+                btn.textContent = typeNames[i];
+                btn.dataset.value = t;
+                btn.addEventListener('click', () => selectType(t));
+                typeButtons.appendChild(btn);
+            });
+        }
+
+        function selectNumber(n) {
+            selectedNumber = n;
+            updateButtonStates('numberButtons', n);
+            checkAnswer();
+        }
+
+        function selectType(t) {
+            selectedType = t;
+            updateButtonStates('typeButtons', t);
+            checkAnswer();
+        }
+
+        function updateButtonStates(containerId, value) {
+            const buttons = document.getElementById(containerId).children;
+            for (let btn of buttons) {
+                btn.classList.toggle('selected', btn.dataset.value === value);
+            }
+        }
+
+        function checkAnswer() {
+            if (selectedNumber && selectedType) {
+                guesses.push({n: selectedNumber, t: selectedType});
+                selectedNumber = null;
+                selectedType = null;
+                clearButtonSelections();
+                advanceToNextCard();
+            }
+        }
+
+        function advanceToNextCard() {
+            currentGuessIndex++;
+            if (currentGuessIndex >= cards.length) {
+                showResults();
+            } else {
+                document.getElementById('progress').textContent = 
+                    `Card ${currentGuessIndex + 1} of 13`;
+            }
+        }
+
+        function skipCard() {
+            guesses.push({n: 'Skipped', t: 'Skipped'});
+            clearButtonSelections();
+            advanceToNextCard();
+        }
+
+        function clearButtonSelections() {
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(btn => btn.classList.remove('selected'));
+        }
+
+        function showResults() {
+            let correct = 0;
+            let resultHTML = '<h3>Results:</h3><ol>';
+            
+            cards.forEach((card, i) => {
+                const guess = guesses[i];
+                const isCorrect = guess.n === card.n && guess.t === card.t;
+                if (isCorrect) correct++;
+                
+                resultHTML += `
+                    <li>
+                        Card: ${card.n === 'T' ? '10' : card.n} of ${getTypeName(card.t)}
+                        - Your guess: ${guess.n === 'T' ? '10' : guess.n} of ${guess.t === 'Skipped' ? 'Skipped' : getTypeName(guess.t)}
+                        ${isCorrect ? '✅' : '❌'}
+                    </li>
+                `;
+            });
+            
+            resultHTML += `</ol><h3>Score: ${correct}/13</h3>`;
+            document.getElementById('results').innerHTML = resultHTML;
+        }
+
+        function getTypeName(t) {
+            return {
+                'S': 'Spades',
+                'D': 'Diamonds',
+                'C': 'Clubs',
+                'H': 'Hearts'
+            }[t];
+        }
+
+        // Event Listeners
+        document.getElementById('startBtn').addEventListener('click', () => {
+            initializeGame();
+            document.getElementById('startBtn').style.display = 'none';
+            showCards();
+        });
+
+        document.getElementById('restartBtn').addEventListener('click', () => {
+            clearTimeout(timeoutId);
+            initializeGame();
+            document.getElementById('startBtn').style.display = 'none';
+            showCards();
+        });
+
+        document.getElementById('skipBtn').addEventListener('click', skipCard);
+
+        document.getElementById('delayInput').addEventListener('wheel', function(e) {
+            e.preventDefault();
+            const delta = Math.sign(e.deltaY);
+            if (delta > 0) {
+                this.stepDown();
+            } else {
+                this.stepUp();
+            }
+            this.dispatchEvent(new Event('input'));
+        });
+
+        document.querySelector('.number-up').addEventListener('click', () => {
+            const input = document.getElementById('delayInput');
+            input.stepUp();
+            input.dispatchEvent(new Event('input'));
+        });
+
+        document.querySelector('.number-down').addEventListener('click', () => {
+            const input = document.getElementById('delayInput');
+            input.stepDown();
+            input.dispatchEvent(new Event('input'));
+        });
+    </script>
+</body>
+</html>
