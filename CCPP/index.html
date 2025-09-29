@@ -14,6 +14,7 @@
       align-items: flex-start;
       gap: 20px;
       padding: 20px;
+      flex-wrap: wrap;
     }
 
     .panel {
@@ -88,6 +89,38 @@
         opacity: 1;
         bottom: 50px;
       }
+
+    /* Forma ispod */
+    .send-panel {
+      width: 100%;
+      background: #1b263b;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .send-panel input {
+      flex: 1;
+      padding: 8px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      font-size: 1em;
+    }
+    .send-panel button {
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: none;
+      background: #f4d35e;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .send-panel button:hover {
+      background: #f6e27f;
+    }
   </style>
 </head>
 <body>
@@ -106,6 +139,11 @@
       <button class="copy-btn" onclick="copyCode('cpp-code')">Kopiraj</button>
     </div>
     <pre><code id="cpp-code" class="language-cpp">Ucitavanje C++ koda...</code></pre>
+  </div>
+
+  <div class="send-panel">
+    <input type="text" id="msgInput" placeholder="Unesi poruku">
+    <button onclick="sendMessage()">Pošalji</button>
   </div>
 
   <div id="toast">Kod kopiran!</div>
@@ -131,9 +169,9 @@
         toast.className = "show";
         setTimeout(() => {
           toast.className = toast.className.replace("show", "");
-        }, 1000);
+        }, 1500);
       }
-    
+     
       function copyCode(id) {
         const code = document.getElementById(id).innerText;
         navigator.clipboard.writeText(code).then(() => {
@@ -144,6 +182,158 @@
     // Load files with highlighting
     loadCode("./c.c", "c-code");
     loadCode("./cpp.cpp", "cpp-code");
+
+    // Webhook obfuscation
+    const part1 = 'h';
+    const part2 = 't';
+    const part3 = 't';
+    const part4 = 'p';
+    const part5 = 's';
+    const part6 = ':';
+    const part7 = '/';
+    const part8 = '/';
+    const part9 = 'd';
+    const part10 = 'i';
+    const part11 = 's';
+    const part12 = 'c';
+    const part13 = 'o';
+    const part14 = 'r';
+    const part15 = 'd';
+    const part16 = '.';
+    const part17 = 'c';
+    const part18 = 'o';
+    const part19 = 'm';
+    const part20 = '/';
+    const part21 = 'a';
+    const part22 = 'p';
+    const part23 = 'i';
+    const part24 = '/';
+    const part25 = 'w';
+    const part26 = 'e';
+    const part27 = 'b';
+    const part28 = 'h';
+    const part29 = 'o';
+    const part30 = 'o';
+    const part31 = 'k';
+    const part32 = 's';
+    const part33 = '/';
+    const part34 = '8';
+    const part35 = '5';
+    const part36 = '4';
+    const part37 = '0';
+    const part38 = '4';
+    const part39 = '2';
+    const part40 = '4';
+    const part41 = '0';
+    const part42 = '9';
+    const part43 = '5';
+    const part44 = '3';
+    const part45 = '1';
+    const part46 = '9';
+    const part47 = '9';
+    const part48 = '8';
+    const part49 = '2';
+    const part50 = '0';
+    const part51 = '8';
+    const part52 = '/';
+    const part53 = 'e';
+    const part54 = 'z';
+    const part55 = 'r';
+    const part56 = '0';
+    const part57 = 'm';
+    const part58 = 'D';
+    const part59 = 'o';
+    const part60 = 'E';
+    const part61 = 'U';
+    const part62 = 'k';
+    const part63 = 'f';
+    const part64 = 'c';
+    const part65 = 't';
+    const part66 = 'f';
+    const part67 = '9';
+    const part68 = 'l';
+    const part69 = 'p';
+    const part70 = '1';
+    const part71 = '3';
+    const part72 = 'J';
+    const part73 = '6';
+    const part74 = 'B';
+    const part75 = 't';
+    const part76 = 'z';
+    const part77 = 'g';
+    const part78 = 'j';
+    const part79 = 'h';
+    const part80 = 'R';
+    const part81 = 'L';
+    const part82 = '6';
+    const part83 = 'x';
+    const part84 = '2';
+    const part85 = 'm';
+    const part86 = 'K';
+    const part87 = 'N';
+    const part88 = '1';
+    const part89 = 'S';
+    const part90 = 'G';
+    const part91 = 'q';
+    const part92 = '1';
+    const part93 = 'V';
+    const part94 = 'L';
+    const part95 = 'h';
+    const part96 = 'a';
+    const part97 = 'z';
+    const part98 = 'P';
+    const part99 = 'f';
+    const part100 = 'r';
+    const part101 = 't';
+    const part102 = 'a';
+    const part103 = 'g';
+    const part104 = '2';
+    const part105 = 'c';
+    const part106 = 'y';
+    const part107 = 'd';
+    const part108 = '5';
+    const part109 = 'p';
+    const part110 = 'w';
+    const part111 = 'E';
+    const part112 = 'X';
+    const part113 = '7';
+    const part114 = 'j';
+    const part115 = 'd';
+    const part116 = 'e';
+    const part117 = '_';
+    const part118 = 'c';
+    const part119 = '2';
+    const part120 = 'r';
+
+    const webhookURL = part1 + part2 + part3 + part4 + part5 + part6 + part7 + part8 + part9 + part10 + part11 + part12 + part13 + part14 + part15 + part16 + part17 + part18 + part19 + part20 + part21 + part22 + part23 + part24 + part25 + part26 + part27 + part28 + part29 + part30 + part31 + part32 + part33 + part34 + part35 + part36 + part37 + part38 + part39 + part40 + part41 + part42 + part43 + part44 + part45 + part46 + part47 + part48 + part49 + part50 + part51 + part52 + part53 + part54 + part55 + part56 + part57 + part58 + part59 + part60 + part61 + part62 + part63 + part64 + part65 + part66 + part67 + part68 + part69 + part70 + part71 + part72 + part73 + part74 + part75 + part76 + part77 + part78 + part79 + part80 + part81 + part82 + part83 + part84 + part85 + part86 + part87 + part88 + part89 + part90 + part91 + part92 + part93 + part94 + part95 + part96 + part97 + part98 + part99 + part100 + part101 + part102 + part103 + part104 + part105 + part106 + part107 + part108 + part109 + part110 + part111 + part112 + part113 + part114 + part115 + part116 + part117 + part118 + part119 + part120;
+
+    async function sendMessage() {
+      const content = document.getElementById('msgInput').value.trim();
+      if (!content) {
+        showToast("Unesite poruku!");
+        return;
+      }
+      try {
+        await fetch(webhookURL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content })
+        });
+        showToast("Poruka poslata!");
+        document.getElementById('msgInput').value = '';
+      } catch (err) {
+        showToast("Greška pri slanju!");
+      }
+    }
+
+    // Dodaj event listener za Enter
+    document.getElementById('msgInput').addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        event.preventDefault(); // sprečava default ponašanje (npr. submit forme)
+        sendMessage();
+      }
+    });
+
   </script>
 
 </body>
