@@ -68,7 +68,7 @@ int main() {
     }
 
     std::cout << "\n*** REZULTATI ***\n";
-    std::cout << "Radnik sa najvecim prosekom plata: " << radnici[indeksNajbolji].ime << " "  radnici[indeksNajbolji].prezime " (prosek: " << najboljiProsek << ")\n";
+    std::cout << "Radnik sa najvecim prosekom plata: " << radnici[indeksNajbolji].ime << " " << radnici[indeksNajbolji].prezime << " (prosek: " << najboljiProsek << ")\n";
 
     std::cout << "Ukupan broj radnika koji su koristili bolovanje: " << brojSaBolovanjem << "\n";
 
