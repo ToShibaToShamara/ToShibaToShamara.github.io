@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>C vs C++ Code</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+  <style>
+    body {
+      background-color: #0d1b2a;
+      font-family: Consolas, monospace;
+      color: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .panel {
+      background: #1b263b;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      padding: 16px;
+      width: 50vw;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .panel-header h2 {
+      margin: 0;
+      font-size: 1.4em;
+      color: #f4d35e;
+    }
+
+    .copy-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      background-color: #f4d35e;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .copy-btn:hover {
+      background-color: #f6e27f;
+    }
+
+    pre {
+      background: #2c3e50;
+      border-radius: 8px;
+      padding: 12px;
+      overflow-x: auto;
+      color: #eee;
+      font-size: 0.95em;
+      line-height: 1.4em;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="panel">
+    <div class="panel-header">
+      <h2>C</h2>
+      <button class="copy-btn" onclick="copyCode('c-code')">Copy</button>
+    </div>
+    <pre><code id="c-code" class="language-c">Loading C code...</code></pre>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <h2>C++</h2>
+      <button class="copy-btn" onclick="copyCode('cpp-code')">Copy</button>
+    </div>
+    <pre><code id="cpp-code" class="language-cpp">Loading C++ code...</code></pre>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    // Fetch code from local files
+    async function loadCode(file, elementId) {
+      try {
+        const response = await fetch(file);
+        if (!response.ok) throw new Error("File not found");
+        const text = await response.text();
+        const codeEl = document.getElementById(elementId);
+        codeEl.textContent = text;
+        hljs.highlightElement(codeEl); // apply highlighting
+      } catch (err) {
+        document.getElementById(elementId).textContent = "Error loading " + file;
+      }
+    }
+
+    function copyCode(id) {
+      const code = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        alert("Code copied!");
+      });
+    }
+
+    // Load files with highlighting
+    loadCode("./c.c", "c-code");
+    loadCode("./cpp.cpp", "cpp-code");
+  </script>
+
+</body>
+</html>
