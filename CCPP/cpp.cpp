@@ -1,13 +1,12 @@
-#include <iostream>
+#include <iostream> 
 
 struct Radnik {
     char ime[20];
     char prezime[20];
-    bool bolovanje;
+    char bolovanje;
     int plata[5];
 };
 
-/// Funkcija za unos podataka o radnicima
 void UnesiPodatke(Radnik radnici[], int n) {
     for (int i = 0; i < n; i++) {
         std::cout << ">>> Unos podataka za radnika broj " << i + 1 << " <<<\n";
@@ -18,7 +17,7 @@ void UnesiPodatke(Radnik radnici[], int n) {
         std::cout << "Prezime: ";
         std::cin >> radnici[i].prezime;
 
-        std::cout << "Bolovanje (1 - da, 0 - ne): ";
+        std::cout << "Bolovanje (d - da, n - ne): ";
         std::cin >> radnici[i].bolovanje;
 
         std::cout << "Unesite 5 mesecnih plata:\n";
@@ -30,12 +29,10 @@ void UnesiPodatke(Radnik radnici[], int n) {
     }
 }
 
-/// Funkcija koja proverava da li je radnik bio na bolovanju
 bool ImaBolovanje(Radnik radnik) {
-    return radnik.bolovanje;
+    return (radnik.bolovanje == 'd' || radnik.bolovanje == 'D');
 }
 
-/// Funkcija koja racuna aritmeticku sredinu plata
 double IzracunajProsek(Radnik radnik) {
     double zbir = 0;
     for (int i = 0; i < 5; i++) {
@@ -71,13 +68,9 @@ int main() {
     }
 
     std::cout << "\n*** REZULTATI ***\n";
-    std::cout << "Radnik sa najvecim prosekom plata: "
-              << radnici[indeksNajbolji].ime << " " 
-              << radnici[indeksNajbolji].prezime
-              << " (prosek: " << najboljiProsek << ")\n";
+    std::cout << "Radnik sa najvecim prosekom plata: " << radnici[indeksNajbolji].ime << " "  radnici[indeksNajbolji].prezime " (prosek: " << najboljiProsek << ")\n";
 
-    std::cout << "Ukupan broj radnika koji su koristili bolovanje: " 
-              << brojSaBolovanjem << "\n";
+    std::cout << "Ukupan broj radnika koji su koristili bolovanje: " << brojSaBolovanjem << "\n";
 
     delete[] radnici;
     system("pause");
