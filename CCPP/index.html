@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>C vs C++ Code</title>
+  <title>C i C++ kodovi</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
   <style>
     body {
@@ -65,6 +65,28 @@
       max-height: 70vh;
       overflow-y: auto;
     }
+    #toast {
+        visibility: hidden;
+        min-width: 160px;
+        background-color: #4ecdc4;
+        color: #000;
+        text-align: center;
+        border-radius: 8px;
+        padding: 10px;
+        position: fixed;
+        left: 50%;
+        bottom: 30px;
+        transform: translateX(-50%);
+        z-index: 1000;
+        font-weight: bold;
+        opacity: 0;
+        transition: opacity 0.3s ease, bottom 0.3s ease;
+      }
+      #toast.show {
+        visibility: visible;
+        opacity: 1;
+        bottom: 50px;
+      }
   </style>
 </head>
 <body>
@@ -72,41 +94,51 @@
   <div class="panel">
     <div class="panel-header">
       <h2>C</h2>
-      <button class="copy-btn" onclick="copyCode('c-code')">Copy</button>
+      <button class="copy-btn" onclick="copyCode('c-code')">Kopiraj</button>
     </div>
-    <pre><code id="c-code" class="language-c">Loading C code...</code></pre>
+    <pre><code id="c-code" class="language-c">Ucitavanje C koda...</code></pre>
   </div>
 
   <div class="panel">
     <div class="panel-header">
       <h2>C++</h2>
-      <button class="copy-btn" onclick="copyCode('cpp-code')">Copy</button>
+      <button class="copy-btn" onclick="copyCode('cpp-code')">Kopiraj</button>
     </div>
-    <pre><code id="cpp-code" class="language-cpp">Loading C++ code...</code></pre>
+    <pre><code id="cpp-code" class="language-cpp">Ucitavanje C++ koda...</code></pre>
   </div>
+
+  <div id="toast">Kod kopiran!</div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script>
-    // Fetch code from local files
     async function loadCode(file, elementId) {
       try {
         const response = await fetch(file);
-        if (!response.ok) throw new Error("File not found");
+        if (!response.ok) throw new Error("Datoteka nije pronadjena");
         const text = await response.text();
         const codeEl = document.getElementById(elementId);
         codeEl.textContent = text;
-        hljs.highlightElement(codeEl); // apply highlighting
+        hljs.highlightElement(codeEl);
       } catch (err) {
-        document.getElementById(elementId).textContent = "Error loading " + file;
+        document.getElementById(elementId).textContent = "Greska pri ucitavanju " + file;
       }
     }
 
-    function copyCode(id) {
-      const code = document.getElementById(id).innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        alert("Code copied!");
-      });
-    }
+    function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.className = "show";
+        setTimeout(() => {
+          toast.className = toast.className.replace("show", "");
+        }, 1000);
+      }
+    
+      function copyCode(id) {
+        const code = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          showToast("Kod kopiran!");
+        });
+      }
 
     // Load files with highlighting
     loadCode("./c.c", "c-code");
